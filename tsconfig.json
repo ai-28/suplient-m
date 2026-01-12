@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
+, "src/app/lib/utils.js", "src/app/i18n/config.js", "src/app/hooks/useMembershipRequests.js", "src/app/utils/taskScheduling.js", "src/app/utils/timestampGrouping.js", "src/app/api/auth/[...nextauth]/route.js", "src/app/components/TestimonialCard.jsx", "src/app/components/TrustBadge.jsx", "src/app/components/ProcessStep.jsx", "src/app/components/LanguageSwitcher.jsx", "src/app/components/DemoBookingForm.jsx", "src/app/components/DemoCTA.jsx", "src/app/components/FeatureItem.jsdx"  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,543 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Mental Health Coach App Color Palette - Warm & Welcoming */
+    --background: 25 100% 97%;
+    /* #fff5f0 warm peach background */
+    --foreground: 217 50% 20%;
+    /* #2c4a6b darker text for better contrast */
+
+    --card: 25 50% 98%;
+    /* #fefaf8 subtle warm white for cards */
+    --card-foreground: 217 50% 20%;
+    /* #2c4a6b */
+
+    --popover: 25 50% 98%;
+    --popover-foreground: 217 50% 20%;
+
+    --primary: 178 61% 45%;
+    /* #4dd4ba darker main teal for better contrast */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 184 31% 48%;
+    /* #549b99 darker teal for better readability */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 25 20% 90%;
+    /* #f0ebe8 warm-tinted muted background */
+    --muted-foreground: 217 40% 35%;
+    /* #446b8c darker muted text */
+
+    --accent: 200 36% 50%;
+    /* #5a8ba3 darker blue-teal for better contrast */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 178 30% 75%;
+    /* #b8ddd6 stronger border */
+    --input: 25 50% 98%;
+    /* warm white input backgrounds */
+    --ring: 178 61% 56%;
+    /* primary color for focus rings */
+
+    /* Semantic colors for enhanced UX */
+    --warning: 25 85% 60%;
+    /* #f0a05c warm orange for warnings */
+    --warning-foreground: 0 0% 100%;
+    --success: 142 76% 36%;
+    /* #16a34a warm green for success */
+    --success-foreground: 0 0% 100%;
+    --info: 200 95% 45%;
+    /* #0ea5e9 soft blue for info */
+    --info-foreground: 0 0% 100%;
+    --achievement: 43 96% 56%;
+    /* #f59e0b warm gold for achievements */
+    --achievement-foreground: 0 0% 100%;
+
+    /* Additional theme colors */
+    --mint-light: 178 75% 95%;
+    /* #b2eee6 */
+    --teal-medium: 178 61% 56%;
+    /* #6ae5cb */
+    --teal-dark: 184 31% 53%;
+    /* #60b0ae */
+    --blue-teal: 200 36% 56%;
+    /* #6497b1 */
+    --navy: 217 37% 24%;
+    /* #385b7e */
+
+    /* Warm accent colors */
+    --warm-light: 25 100% 97%;
+    /* #fff5f0 */
+    --warm-medium: 20 80% 88%;
+    /* #f5ddd0 */
+    --warm-accent: 15 70% 85%;
+    /* #f0d5c4 */
+
+    /* Clean, modern gradients for landing page */
+    --gradient-clean-hero: linear-gradient(135deg, hsl(220 30% 30%) 0%, hsl(220 35% 40%) 100%);
+    --gradient-clean-nav: linear-gradient(135deg, hsl(220 25% 25%) 0%, hsl(220 30% 35%) 100%);
+    --gradient-clean-section: linear-gradient(135deg, hsl(0 0% 98%) 0%, hsl(0 0% 100%) 100%);
+    --color-clean-background: hsl(0 0% 99%);
+    --color-clean-section: hsl(210 20% 97%);
+    --color-clean-accent: hsl(178 61% 45%);
+    --color-text-primary: hsl(220 30% 15%);
+    --color-text-secondary: hsl(220 15% 45%);
+
+    /* Legacy warm gradients */
+    --gradient-healing: linear-gradient(135deg, hsl(0 0% 99%) 0%, hsl(166 59% 88%) 50%, hsl(216 67% 73%) 100%);
+    --gradient-wellness: linear-gradient(135deg, hsl(166 59% 88%) 0%, hsl(216 67% 73%) 100%);
+    --gradient-overlay: linear-gradient(135deg, hsl(0 0% 99% / 0.9) 0%, hsl(166 59% 88% / 0.9) 100%);
+    --gradient-peach: linear-gradient(135deg, hsl(0 0% 99%) 0%, hsl(166 59% 88%) 100%);
+    --gradient-lavender: linear-gradient(135deg, hsl(166 59% 88%) 0%, hsl(216 67% 73%) 100%);
+    --gradient-text: linear-gradient(135deg, hsl(166 59% 60%) 0%, hsl(216 67% 73%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(var(--primary) / 0.15);
+    --shadow-medium: 0 8px 30px hsl(var(--primary) / 0.2);
+    --shadow-strong: 0 12px 40px hsl(var(--navy) / 0.25);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 217 37% 24%;
+    /* #385b7e navy */
+    --sidebar-foreground: 178 75% 95%;
+    --sidebar-primary: 178 61% 56%;
+    /* #6ae5cb */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 184 31% 53%;
+    /* #60b0ae */
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 217 37% 30%;
+    --sidebar-ring: 178 61% 56%;
+
+    /* Discreet sidebar active state */
+    --sidebar-active: 25 100% 97%;
+    /* very subtle warm background */
+    --sidebar-active-accent: 178 61% 45%;
+    /* primary color for accent border */
+  }
+
+  .dark {
+    --background: 240 10% 8%;
+    /* Brighter background */
+    --foreground: 210 40% 98%;
+
+    --card: 240 10% 10%;
+    /* Brighter card background */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 10% 10%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 178 61% 56%;
+    /* Keep primary teal bright for contrast */
+    --primary-foreground: 240 10% 8%;
+
+    --secondary: 240 3.7% 20%;
+    /* Brighter secondary */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 240 3.7% 18%;
+    /* Brighter muted */
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 240 3.7% 20%;
+    /* Brighter accent */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 240 3.7% 20%;
+    /* Brighter border */
+    --input: 240 10% 12%;
+    /* Brighter input background */
+    --ring: 178 61% 56%;
+    /* Bright teal ring */
+    --sidebar-background: 240 10% 6%;
+    /* Brighter sidebar */
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 178 61% 56%;
+    /* Consistent teal */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 18%;
+    /* Brighter sidebar accent */
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15%;
+    /* Brighter sidebar border */
+    --sidebar-ring: 178 61% 56%;
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+
+  /* Typography System */
+  .page-title {
+    @apply text-3xl font-bold text-foreground;
+  }
+
+  .page-subtitle {
+    @apply text-muted-foreground mt-1;
+  }
+
+  .section-title {
+    @apply text-xl font-semibold text-foreground;
+  }
+
+  .card-title {
+    @apply text-lg font-semibold text-foreground;
+  }
+
+  .body-text {
+    @apply text-sm text-foreground;
+  }
+
+  .caption-text {
+    @apply text-xs text-muted-foreground;
+  }
+
+  /* Layout Components */
+  .page-container {
+    @apply space-y-6;
+  }
+
+  .page-header {
+    @apply flex items-center justify-between;
+  }
+
+  .card-standard {
+    @apply bg-card border border-border rounded-lg shadow-sm;
+  }
+
+  .card-hover {
+    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-all duration-200;
+  }
+
+  .grid-responsive {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .grid-dashboard {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6;
+  }
+
+  /* Interactive Elements */
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .filter-button {
+    @apply h-8 px-3 hover-scale;
+  }
+
+  /* Badge System */
+  .badge-primary {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .badge-accent {
+    @apply bg-accent text-accent-foreground;
+  }
+
+  .badge-success {
+    @apply bg-green-500 text-white;
+  }
+
+  .badge-warning {
+    @apply bg-yellow-500 text-white;
+  }
+
+  .badge-destructive {
+    @apply bg-destructive text-destructive-foreground;
+  }
+
+  /* Status Indicators */
+  .status-active {
+    @apply bg-green-100 text-green-800 border border-green-200;
+  }
+
+  .status-inactive {
+    @apply bg-muted text-muted-foreground border border-border;
+  }
+
+  .status-pending {
+    @apply bg-yellow-100 text-yellow-800 border border-yellow-200;
+  }
+
+  .status-overdue {
+    @apply bg-destructive/10 text-destructive border border-destructive/20;
+  }
+
+  .bg-sidebar {
+    background-color: hsl(var(--sidebar-background));
+  }
+
+  .text-sidebar-foreground {
+    color: hsl(var(--sidebar-foreground));
+  }
+
+  .text-sidebar-primary {
+    color: hsl(var(--sidebar-primary));
+  }
+
+  .bg-sidebar-accent\/30 {
+    background-color: hsl(var(--sidebar-accent) / 0.3);
+  }
+
+  .bg-sidebar-accent\/50 {
+    background-color: hsl(var(--sidebar-accent) / 0.5);
+  }
+
+  .bg-sidebar-accent\/70 {
+    background-color: hsl(var(--sidebar-accent) / 0.7);
+  }
+
+  .bg-sidebar-accent\/90 {
+    background-color: hsl(var(--sidebar-accent) / 0.9);
+  }
+}
+
+@layer utilities {
+
+  /* Custom shadow utilities using CSS variables */
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  /* Custom gradient utilities */
+  .bg-gradient-clean-hero {
+    background: var(--gradient-clean-hero);
+  }
+
+  .bg-gradient-clean-nav {
+    background: var(--gradient-clean-nav);
+  }
+
+  .bg-gradient-clean-section {
+    background: var(--gradient-clean-section);
+  }
+
+  .bg-gradient-healing {
+    background: var(--gradient-healing);
+  }
+
+  .bg-gradient-wellness {
+    background: var(--gradient-wellness);
+  }
+
+  .bg-gradient-overlay {
+    background: var(--gradient-overlay);
+  }
+
+  .bg-gradient-peach {
+    background: var(--gradient-peach);
+  }
+
+  .bg-gradient-lavender {
+    background: var(--gradient-lavender);
+  }
+
+  .text-gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  /* Safe Area Insets - Works on iOS (notch/Dynamic Island) and Android (returns 0 if no notch) */
+  /* Automatically 0px on desktop, actual values on mobile with notches */
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .safe-left {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .safe-x {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  .safe-y {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Top offset for fixed headers */
+  .top-safe {
+    top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Bottom offset for fixed footers */
+  .bottom-safe {
+    bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Bottom safe with padding for home indicator */
+  .bottom-safe-padded {
+    bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Bottom position accounting for bottom nav (93px) + safe area */
+  .bottom-nav-safe {
+    bottom: calc(93px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Bottom nav safe with padding */
+  .bottom-nav-safe-padded {
+    bottom: calc(93px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Height utilities accounting for safe areas */
+  .h-screen-safe {
+    height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  }
+
+  .min-h-screen-safe {
+    min-height: calc(100vh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Sonner Toast Close Button - Red Styling & Top Right Position */
+[data-sonner-toast] {
+  position: relative !important;
+}
+
+[data-sonner-toast] [data-close-button] {
+  color: #ef4444 !important;
+  /* Red-500 */
+  opacity: 1 !important;
+  transition: all 0.2s ease;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  left: auto !important;
+  z-index: 10 !important;
+  margin: 0 !important;
+  padding: 4px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  color: #dc2626 !important;
+  /* Red-600 - darker on hover */
+  background-color: rgba(239, 68, 68, 0.1) !important;
+  border-radius: 4px;
+}
+
+[data-sonner-toast] [data-close-button]:active {
+  color: #b91c1c !important;
+  /* Red-700 - even darker on click */
+}
+
+/* Dark mode support */
+.dark [data-sonner-toast] [data-close-button] {
+  color: #f87171 !important;
+  /* Red-400 - lighter for dark mode */
+}
+
+.dark [data-sonner-toast] [data-close-button]:hover {
+  color: #ef4444 !important;
+  /* Red-500 */
+  background-color: rgba(248, 113, 113, 0.15) !important;
+}
+
+/* Mobile Emulator Responsive Styles */
+.mobile-emulator-wrapper {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mobile-emulator-wrapper .mobile-device-emulator-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 1rem !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Scale the emulator to fit container width */
+.mobile-emulator-wrapper .mobile-device-emulator-container>div {
+  transform-origin: center !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Make the device frame responsive */
+.mobile-emulator-wrapper .mobile-device-emulator-container>div>div {
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+
+/* Responsive scaling - adjust scale based on container width */
+@media (max-width: 640px) {
+  .mobile-emulator-wrapper .mobile-device-emulator-container>div {
+    transform: scale(0.7) !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .mobile-emulator-wrapper .mobile-device-emulator-container>div {
+    transform: scale(0.85) !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .mobile-emulator-wrapper .mobile-device-emulator-container>div {
+    transform: scale(1) !important;
+  }
+}

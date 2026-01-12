@@ -1,0 +1,57 @@
+{
+  "appId": "com.suplient.app",
+  "appName": "Suplient",
+  "webDir": "www",
+  "server": {
+    "url": "https://app.suplient.com",
+    "cleartext": false,
+    "androidScheme": "https",
+    "iosScheme": "https"
+  },
+  "android": {
+    "allowNavigation": [
+      "https://suplient.com",
+      "https://app.suplient.com",
+      "https://*.suplient.com",
+      "suplient.com",
+      "app.suplient.com"
+    ],
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "ios": {
+    "allowNavigation": [
+      "https://suplient.com",
+      "https://app.suplient.com",
+      "https://*.suplient.com",
+      "suplient.com",
+      "app.suplient.com"
+    ],
+    "scrollEnabled": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffff",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "iosSpinnerStyle": "small",
+      "spinnerColor": "#999999",
+      "splashFullScreen": true,
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "default",
+      "backgroundColor": "#ffffff",
+      "overlaysWebView": true
+    },
+    "Keyboard": {
+      "resize": "body",
+      "style": "light",
+      "resizeOnFullScreen": true
+    }
+  }
+}
