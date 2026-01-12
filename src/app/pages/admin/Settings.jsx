@@ -921,6 +921,7 @@ export default function AdminSettings() {
                         type="file"
                         id="avatar-upload-admin"
                         accept="image/*,.heic,.heif"
+                        capture={false}
                         className="hidden"
                         onChange={handleAvatarFileSelect}
                         disabled={uploadingAvatar}

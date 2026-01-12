@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
+import { Checkbox } from "@/app/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -34,6 +35,10 @@ export default function Login() {
   const [requires2FA, setRequires2FA] = useState(false);
   const [twoFactorToken, setTwoFactorToken] = useState("");
   const [twoFAUserId, setTwoFAUserId] = useState(null);
+  
+  // Terms acceptance state
+  const [acceptedTermsLogin, setAcceptedTermsLogin] = useState(false);
+  const [acceptedTermsRegister, setAcceptedTermsRegister] = useState(false);
   
   // Registration form state
   const [name, setName] = useState("");
@@ -97,6 +102,13 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    
+    // Validate terms acceptance
+    if (!acceptedTermsLogin) {
+      toast.error(`❌ ${t('login.errors.acceptTerms', 'Please accept the Terms of Service and Privacy Policy to continue')}`, { duration: 5000 });
+      return;
+    }
+    
     setLoginLoading(true);
     
     try {
@@ -241,6 +253,13 @@ export default function Login() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    
+    // Validate terms acceptance
+    if (!acceptedTermsRegister) {
+      toast.error(`❌ ${t('login.errors.acceptTerms', 'Please accept the Terms of Service and Privacy Policy to continue')}`, { duration: 5000 });
+      return;
+    }
+    
     setRegisterLoading(true);
     
     // Validate questionnaire fields
@@ -440,7 +459,26 @@ export default function Login() {
                         </Link>
                       </div>
                       
-                      <Button type="submit" className="w-full h-11" disabled={loginLoading}>
+                      <div className="flex items-start space-x-2">
+                        <Checkbox
+                          id="accept-terms-login"
+                          checked={acceptedTermsLogin}
+                          onCheckedChange={(checked) => setAcceptedTermsLogin(checked)}
+                          required
+                        />
+                        <label htmlFor="accept-terms-login" className="text-sm text-muted-foreground leading-tight cursor-pointer">
+                          {t('login.acceptTerms', 'I agree to the')}{" "}
+                          <Link href="https://suplient.com/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                            {t('login.termsOfService', 'Terms of Service')}
+                          </Link>
+                          {" "}{t('login.and', 'and')}{" "}
+                          <Link href="https://suplient.com/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                            {t('login.privacyPolicy', 'Privacy Policy')}
+                          </Link>
+                        </label>
+                      </div>
+                      
+                      <Button type="submit" className="w-full h-11" disabled={loginLoading || !acceptedTermsLogin}>
                         {loginLoading ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -671,7 +709,26 @@ export default function Login() {
                         />
                       </div>
                       
-                      <Button type="submit" className="w-full h-11" disabled={registerLoading}>
+                      <div className="flex items-start space-x-2">
+                        <Checkbox
+                          id="accept-terms-register"
+                          checked={acceptedTermsRegister}
+                          onCheckedChange={(checked) => setAcceptedTermsRegister(checked)}
+                          required
+                        />
+                        <label htmlFor="accept-terms-register" className="text-sm text-muted-foreground leading-tight cursor-pointer">
+                          {t('login.acceptTerms', 'I agree to the')}{" "}
+                          <Link href="https://suplient.com/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                            {t('login.termsOfService', 'Terms of Service')}
+                          </Link>
+                          {" "}{t('login.and', 'and')}{" "}
+                          <Link href="https://suplient.com/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                            {t('login.privacyPolicy', 'Privacy Policy')}
+                          </Link>
+                        </label>
+                      </div>
+                      
+                      <Button type="submit" className="w-full h-11" disabled={registerLoading || !acceptedTermsRegister}>
                         {registerLoading ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -685,17 +742,6 @@ export default function Login() {
                   )}
                 </TabsContent>
               </Tabs>
-              
-              <div className="mt-6 text-center text-sm text-muted-foreground">
-                {t('login.termsAndPrivacy', 'By continuing, you agree to our')}{" "}
-                <Link href="https://suplient.com/terms" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                  {t('login.termsOfService', 'Terms of Service')}
-                </Link>{" "}
-                {t('login.and', 'and')}{" "}
-                <Link href="https://suplient.com/privacy" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                  {t('login.privacyPolicy', 'Privacy Policy')}
-                </Link>
-              </div>
             </CardContent>
           </Card>
         </div>

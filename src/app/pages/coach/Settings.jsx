@@ -1468,6 +1468,7 @@ export default function Settings() {
                         type="file"
                         id="avatar-upload"
                         accept="image/*,.heic,.heif"
+                        capture={false}
                         className="hidden"
                         onChange={handleAvatarFileSelect}
                         disabled={uploadingAvatar}

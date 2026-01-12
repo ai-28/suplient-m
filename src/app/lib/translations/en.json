@@ -1036,6 +1036,7 @@
         "termsOfService": "Terms of Service",
         "and": "and",
         "privacyPolicy": "Privacy Policy",
+        "acceptTerms": "I agree to the",
         "tagline": "Scale your practice, amplify your impact",
         "heroTitle": "Scale your impact keep the human touch",
         "heroDescription": "Deliver personal 1:1 and group programs, support hundreds of clients in parallel and track real progress -without stress, burnout or extra hours.",
@@ -1049,7 +1050,8 @@
             "passwordsNotMatch": "Passwords do not match",
             "passwordTooShort": "Password must be at least 8 characters long",
             "answerAllQuestions": "Please answer all questions",
-            "registrationFailed": "Registration failed"
+            "registrationFailed": "Registration failed",
+            "acceptTerms": "Please accept the Terms of Service and Privacy Policy to continue"
         },
         "success": {
             "loginSuccessful": "Login successful! Redirecting...",

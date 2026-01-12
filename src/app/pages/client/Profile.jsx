@@ -1400,6 +1400,7 @@ export default function ClientProfile() {
                     type="file"
                     id="avatar-upload-client"
                     accept="image/*,.heic,.heif"
+                    capture={false}
                     className="hidden"
                     onChange={handleAvatarFileSelect}
                     disabled={uploadingAvatar}

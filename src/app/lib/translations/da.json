@@ -998,6 +998,7 @@
         "termsOfService": "Servicevilkår",
         "and": "og",
         "privacyPolicy": "Fortrolighedspolitik",
+        "acceptTerms": "Jeg accepterer",
         "tagline": "Skaler din praksis, forstærk din indvirkning",
         "heroTitle": "Hjælp flere klienter uden at miste nærværet",
         "heroDescription": "Tilbyd personlige 1:1 og gruppeforløb, hjælp hundredvis af klienter parallelt og følg deres udvikling -uden stress, udbrændthed eller ekstra arbejdstimer.",
@@ -1011,7 +1012,8 @@
             "passwordsNotMatch": "Adgangskoder matcher ikke",
             "passwordTooShort": "Adgangskoden skal være mindst 8 tegn lang",
             "answerAllQuestions": "Besvar venligst alle spørgsmål",
-            "registrationFailed": "Registrering mislykkedes"
+            "registrationFailed": "Registrering mislykkedes",
+            "acceptTerms": "Accepter venligst servicevilkårene og fortrolighedspolitikken for at fortsætte"
         },
         "success": {
             "loginSuccessful": "Login succesfuldt! Omdirigerer...",
