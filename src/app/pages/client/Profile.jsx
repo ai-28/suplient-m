@@ -348,55 +348,6 @@ const useGoalTracking = () => {
 
 function ClientBillingTab({ loading, subscriptions, payments, paymentMethods, onCancelSubscription, onRefresh, isMobile, userData }) {
   const { data: session } = useSession();
-  const [creatingSubscription, setCreatingSubscription] = useState(null);
-  const [coachProducts, setCoachProducts] = useState([]);
-  const [productsLoading, setProductsLoading] = useState(false);
-
-  // Fetch coach's products
-  useEffect(() => {
-    const fetchCoachProducts = async () => {
-      try {
-        setProductsLoading(true);
-        const response = await fetch('/api/client/coach/products');
-        if (response.ok) {
-          const data = await response.json();
-          setCoachProducts(data.products || []);
-        }
-      } catch (error) {
-        console.error('Error fetching coach products:', error);
-      } finally {
-        setProductsLoading(false);
-      }
-    };
-
-    fetchCoachProducts();
-  }, []);
-
-  const handleCreateSubscription = async (coachId, productType) => {
-    try {
-      setCreatingSubscription(`${coachId}-${productType}`);
-      const response = await fetch('/api/payments/create-subscription', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ coachId, productType }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create subscription');
-      }
-
-      const data = await response.json();
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
-      }
-    } catch (error) {
-      console.error('Error creating subscription:', error);
-      toast.error(error.message || 'Failed to create subscription');
-    } finally {
-      setCreatingSubscription(null);
-    }
-  };
 
   // Check if client has active subscription for a product type
   const hasActiveSubscription = (productType) => {
@@ -406,278 +357,64 @@ function ClientBillingTab({ loading, subscriptions, payments, paymentMethods, on
     );
   };
 
-  // Get coach ID
-  const coachId = userData?.coachId || session?.user?.coachId;
-
-  // Get product by type
-  const getProduct = (productType) => {
-    return coachProducts.find(p => p.productType === productType);
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
         <Loader2 className="h-6 w-6 animate-spin mr-2" />
-        <span className="text-sm text-muted-foreground">Loading billing information...</span>
+        <span className="text-sm text-muted-foreground">Loading service information...</span>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Available Subscriptions */}
-      {coachId && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              Subscribe to Services
-            </CardTitle>
-            <CardDescription>Subscribe to your coach's programs or groups</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {productsLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                <span className="text-sm text-muted-foreground">Loading products...</span>
-              </div>
-            ) : coachProducts.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground text-sm">
-                  Your coach hasn't set up subscription products yet.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {/* Program Subscription */}
-                {getProduct('program') && (
-                  <div className={`p-4 rounded-lg border ${isMobile ? 'p-3' : ''}`}>
-                    <div className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}>
-                      <div className="flex-1">
-                        <h4 className={`font-semibold ${isMobile ? 'text-sm' : ''}`}>Program Subscription</h4>
-                        <p className={`text-muted-foreground mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                          Access to your coach's program
-                        </p>
-                        <p className={`font-medium ${isMobile ? 'text-sm' : ''}`}>
-                          {(getProduct('program').amount / 100).toFixed(0)} {getProduct('program').currency?.toUpperCase() || 'DKK'}/month
-                        </p>
-                      </div>
-                      <Button
-                        onClick={() => handleCreateSubscription(coachId, 'program')}
-                        disabled={creatingSubscription?.includes('program') || hasActiveSubscription('program')}
-                        className={isMobile ? 'w-full mt-2' : 'ml-4'}
-                        size={isMobile ? 'sm' : 'default'}
-                      >
-                        {creatingSubscription?.includes('program') ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Processing...
-                          </>
-                        ) : hasActiveSubscription('program') ? (
-                          'Already Subscribed'
-                        ) : (
-                          'Subscribe'
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Group Subscription */}
-                {getProduct('group') && (
-                  <div className={`p-4 rounded-lg border ${isMobile ? 'p-3' : ''}`}>
-                    <div className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}>
-                      <div className="flex-1">
-                        <h4 className={`font-semibold ${isMobile ? 'text-sm' : ''}`}>Group Membership</h4>
-                        <p className={`text-muted-foreground mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                          Join your coach's group sessions
-                        </p>
-                        <p className={`font-medium ${isMobile ? 'text-sm' : ''}`}>
-                          {(getProduct('group').amount / 100).toFixed(0)} {getProduct('group').currency?.toUpperCase() || 'DKK'}/month
-                        </p>
-                      </div>
-                      <Button
-                        onClick={() => handleCreateSubscription(coachId, 'group')}
-                        disabled={creatingSubscription?.includes('group') || hasActiveSubscription('group')}
-                        className={isMobile ? 'w-full mt-2' : 'ml-4'}
-                        size={isMobile ? 'sm' : 'default'}
-                      >
-                        {creatingSubscription?.includes('group') ? (
-                          <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Processing...
-                          </>
-                        ) : hasActiveSubscription('group') ? (
-                          'Already Subscribed'
-                        ) : (
-                          'Subscribe'
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Active Subscriptions */}
+      {/* Service Status */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5" />
-            Active Subscriptions
+            <Shield className="h-5 w-5" />
+            My Services
           </CardTitle>
-          <CardDescription>Your active subscriptions to coach services</CardDescription>
+          <CardDescription>Your service subscriptions status</CardDescription>
         </CardHeader>
         <CardContent>
-          {subscriptions.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No active subscriptions</p>
-            </div>
-          ) : (
-            <div className="max-h-[400px] overflow-y-auto space-y-4 pr-2">
-              {subscriptions.map((sub) => (
-                <div key={sub.id} className="p-4 rounded-lg border bg-muted/30">
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <h4 className="font-semibold">
-                        {sub.productType === 'program' && 'Program Subscription'}
-                        {sub.productType === 'group' && 'Group Membership'}
-                      </h4>
-                      <p className="text-sm text-muted-foreground">Coach: {sub.coachName}</p>
-                    </div>
-                    <Badge variant={sub.status === 'active' ? 'default' : 'secondary'}>
-                      {sub.status}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between mt-3">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Amount</p>
-                      <p className="font-semibold">{(sub.amount / 100).toFixed(0)} DKK/month</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-sm text-muted-foreground">Next billing</p>
-                      <p className="text-sm">
-                        {sub.currentPeriodEnd 
-                          ? new Date(sub.currentPeriodEnd).toLocaleDateString()
-                          : 'N/A'}
-                      </p>
-                    </div>
-                  </div>
-                  {sub.status === 'active' && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="mt-3 w-full"
-                      onClick={() => onCancelSubscription(sub.stripeSubscriptionId)}
-                    >
-                      Cancel Subscription
-                    </Button>
-                  )}
+          <div className="space-y-4">
+            {/* Program Service */}
+            <div className={`p-4 rounded-lg border ${isMobile ? 'p-3' : ''}`}>
+              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}>
+                <div className="flex-1">
+                  <h4 className={`font-semibold ${isMobile ? 'text-sm' : ''}`}>Program</h4>
+                  <p className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Access to your coach's program
+                  </p>
                 </div>
-              ))}
+                <Badge 
+                  variant={hasActiveSubscription('program') ? 'default' : 'secondary'}
+                  className={isMobile ? 'mt-2' : 'ml-4'}
+                >
+                  {hasActiveSubscription('program') ? 'Active' : 'Inactive'}
+                </Badge>
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
 
-      {/* Payment History */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Payment History</CardTitle>
-          <CardDescription>Your recent payments</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {payments.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No payment history</p>
-            </div>
-          ) : (
-            <div className="max-h-[400px] overflow-y-auto space-y-2 pr-2">
-              {payments.map((payment) => (
-                <div key={payment.id} className="flex items-center justify-between p-3 rounded-lg border">
-                  <div>
-                    <p className="font-medium">{payment.description || 'Payment'}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(payment.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold">{(payment.amount / 100).toFixed(0)} DKK</p>
-                    <Badge variant={payment.status === 'succeeded' ? 'default' : 'secondary'} className="text-xs">
-                      {payment.status}
-                    </Badge>
-                  </div>
+            {/* Group Membership Service */}
+            <div className={`p-4 rounded-lg border ${isMobile ? 'p-3' : ''}`}>
+              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}>
+                <div className="flex-1">
+                  <h4 className={`font-semibold ${isMobile ? 'text-sm' : ''}`}>Group Membership</h4>
+                  <p className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Join your coach's group sessions
+                  </p>
                 </div>
-              ))}
+                <Badge 
+                  variant={hasActiveSubscription('group') ? 'default' : 'secondary'}
+                  className={isMobile ? 'mt-2' : 'ml-4'}
+                >
+                  {hasActiveSubscription('group') ? 'Active' : 'Inactive'}
+                </Badge>
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Custom Payment */}
-      {coachId && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
-              Custom Payment
-            </CardTitle>
-            <CardDescription>Make a custom payment to your coach</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="p-4 rounded-lg border bg-muted/30">
-              <p className="text-sm text-muted-foreground mb-4">
-                Need to make a custom payment? Enter any amount you'd like to pay to your coach.
-              </p>
-              <Button
-                onClick={() => window.location.href = '/client/custom-payment'}
-                className="w-full"
-                variant="outline"
-              >
-                <CreditCard className="h-4 w-4 mr-2" />
-                Make Custom Payment
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Payment Methods */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Payment Methods</CardTitle>
-          <CardDescription>Your saved payment methods</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {paymentMethods.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground">No payment methods saved</p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {paymentMethods.map((method) => (
-                <div key={method.id} className="flex items-center justify-between p-3 rounded-lg border">
-                  <div className="flex items-center gap-3">
-                    <CreditCard className="h-5 w-5 text-muted-foreground" />
-                    <div>
-                      <p className="font-medium">
-                        {method.brand?.toUpperCase()} •••• {method.last4}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        Expires {method.expMonth}/{method.expYear}
-                      </p>
-                    </div>
-                  </div>
-                  {method.isDefault && (
-                    <Badge variant="outline">Default</Badge>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -1623,7 +1360,7 @@ export default function ClientProfile() {
           >
             <div className={`flex items-center gap-1 ${isMobile ? 'flex-col' : 'flex-row'}`}>
               <CreditCard className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'}`} />
-              <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>Billing</span>
+              <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>My Service</span>
             </div>
           </TabsTrigger>
         </TabsList>
